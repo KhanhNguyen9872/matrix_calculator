@@ -14,7 +14,7 @@ def matrix_initialization(m,n):
         matrix.append(temp_matrix)
     return matrix
 def head_matrix(m,n,num):
-    print(" 0 | matrix {2} | max column: {0} | max row: {1}".format(str(n),str(m),str(num)))
+    print(" 0 | [matrix {2}] | max column: {0} | max row: {1}".format(str(n),str(m),str(num)))
 def left_matrix(i):
     print(f" {i} | ",end="")
 def print_matrix(num_matrix,execute,m,n):
@@ -57,6 +57,7 @@ def input_matrix(m,n,num):
 def trapezoid(e,m,n):
     exec(f"""global matrix
 matrix={e}""")
+    print()
     one=-1
     for i in range(0,len(matrix[0]),1):
         if int(matrix[0][i])==0:
@@ -89,10 +90,14 @@ matrix={e}""")
                 else:
                     one=int(num+1)
                     break
-def multiplication(a,b,m0,n0,m1,n1):
+        return matrix
+def calc_matrix(a,b,m0,n0,m1,n1):
     exec(f"""global matrix0,matrix1
 matrix0={a}
 matrix1={b}""")
+    print()
+    print('===========')
+    print()
     if (int(n0)==int(m1)):
         answer=[]
         for row in range(0,len(matrix0),1):
@@ -101,7 +106,7 @@ matrix1={b}""")
                 calc="0"
                 row2=0
                 for i in range(0,len(matrix0[row]),1):
-                    calc+="+{0}*{1}".format(str(matrix0[row][i]),str(matrix1[row2][j]))
+                    calc+="+{0}{2}{1}".format(str(matrix0[row][i]),str(matrix1[row2][j]),str(math))
                     row2+=1
                 temp.append(float(eval(calc)))
             answer.append(temp)
@@ -109,3 +114,27 @@ matrix1={b}""")
     else:
         print("Cannot calculator {0}x{1} and {2}x{3}".format(str(m0),str(n0),str(m1),str(n1)))
         exit()
+def matrix_xx(e,m,n):
+    exec(f"""global matrix
+matrix={e}""")
+    print()
+    while 1:
+        try:
+            math=int(input("Input number you want to multiply [1-250]: "))
+            if 0<math<251:
+                break
+            else:
+                print("Limit [1-250]")
+        except KeyboardInterrupt:
+            print("Exiting...")
+            exit()
+        except:
+            print("Please input number!")
+            print("Example: 2")
+    print()
+    print('===========')
+    print()
+    for row in range(0,len(matrix),1):
+        for column in range(0,len(matrix[row]),1):
+            matrix[row][column]=float(matrix[row][column]*int(math))
+    return matrix
