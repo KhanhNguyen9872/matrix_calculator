@@ -1,8 +1,8 @@
 #!/bin/python3
 if __name__=='__main__':
-    from lib import clear,matrix_initialization,print_matrix,input_matrix,trapezoid,calc_matrix,matrix_xx,exit
-    clear()
+    from lib import *
     while 1:
+        clear()
         ask=str(input("""
 Please choose calculation method:
 1. Hình thang (trapezoid)
@@ -10,6 +10,8 @@ Please choose calculation method:
 3. Phép trừ ma trận (-)
 4. Phép nhân ma trận (*)
 5. Nhân ma trận lên nhiều lần (x1,x2,...)
+6. Mã hóa string bằng ma trận
+7. Giải mã string bằng ma trận
 K. Exit
 
 Your choose: """))
@@ -26,6 +28,12 @@ Your choose: """))
             max=2
             break
         elif ask=="5":
+            max=1
+            break
+        elif ask=="6":
+            max=1
+            break
+        elif ask=="7":
             max=1
             break
         elif ask=="K" or ask=="k":
@@ -54,24 +62,40 @@ matrix{0}=matrix_initialization(m{0},n{0})
 print_matrix({0},matrix{0},m{0},n{0})
 while 1:
     ask1=str(input("Do you want input [matrix {0}]? [Y/n]: "))
-    if ask1=="Y" or ask1=="y":
+    if ask1.lower()=="y":
         print()
         matrix{0}=input_matrix(m{0},n{0},int({0}))
         break
-    elif ask1=="N" or ask1=="n":
+    elif ask1.lower()=="n":
         break""".format(str(choose)))
     del ask1
     if ask=="1":
         trapezoid(str(matrix0),m0,n0)
     elif ask=="2":
-        answer=calc_matrix(str(matrix0),str(matrix1),m0,n0,m1,n1,"*")
-        print_matrix("answer",answer,m0,n0)
-    elif ask=="3":
         answer=calc_matrix(str(matrix0),str(matrix1),m0,n0,m1,n1,"+")
         print_matrix("answer",answer,m0,n0)
-    elif ask=="4":
+    elif ask=="3":
         answer=calc_matrix(str(matrix0),str(matrix1),m0,n0,m1,n1,"-")
+        print_matrix("answer",answer,m0,n0)
+    elif ask=="4":
+        answer=calc_matrix(str(matrix0),str(matrix1),m0,n0,m1,n1,"*")
         print_matrix("answer",answer,m0,n0)
     elif ask=="5":
         answer=matrix_xx(str(matrix0),m0,n0)
         print_matrix("answer",answer,m0,n0)
+    elif ask=="6":
+        text=str(input("Input text: "))
+        text2=encrypt_matrix(1,str(matrix0),str(text),m0,n0)
+        clear()
+        print("Key: ")
+        print_matrix("key",matrix0,m0,n0)
+        print("Original text: {}".format(str(text)))
+        print("Encrypted text: {}".format(str(text2)))
+    elif ask=="7":
+        text=str(input("Input Encrypt text: "))
+        text2=encrypt_matrix(0,str(matrix0),str(text),m0,n0)
+        clear()
+        print("Key: ")
+        print_matrix("key",matrix0,m0,n0)
+        print("Encrypted text: {}".format(str(text)))
+        print("Decrypted text: {}".format(str(text2)))
