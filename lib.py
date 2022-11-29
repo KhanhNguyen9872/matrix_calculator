@@ -155,6 +155,7 @@ def encrypt_matrix(k,e,text_ori,m,n):
         num2text[int(count)]=str(char)
         count+=1
     len_char=len(character)
+    global matrix
     exec(f"""global matrix
 matrix={e}""")
     print()

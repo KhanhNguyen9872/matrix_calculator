@@ -46,6 +46,7 @@ matrix{0}=[]""".format(str(choose)))
         # input m and n
         exec("""print()
 print('===========')
+print("[Ctrl + C to Exit]")
 while 1:
     try:
         print()
@@ -57,6 +58,9 @@ while 1:
     except ValueError:
         print('Please input mXn')
         print('Example: 3x5')
+    except KeyboardInterrupt:
+        print("\\nExiting...")
+        exit()
 sum_matrix=int(m{0}*n{0})
 matrix{0}=matrix_initialization(m{0},n{0})
 print_matrix({0},matrix{0},m{0},n{0})
