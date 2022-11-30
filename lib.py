@@ -1,5 +1,6 @@
 from os import system,name
 from sys import exit
+from lib2 import *
 def error(m,n,text,required,error):
     print("Matrix size: {0}x{1}".format(str(m),str(n)))
     print("Text: \"{0}\" ({1} character)".format(str(text),str(len(text))))
@@ -22,9 +23,11 @@ def head_matrix(m,n,num):
     print(" 0 | [matrix {2}] | max column: {0} | max row: {1}".format(str(n),str(m),str(num)))
 def left_matrix(i):
     print(f" {i} | ",end="")
-def print_matrix(num_matrix,execute,m,n):
+def print_matrix(num_matrix,execute):
     exec("""global matrix{0}
 matrix{0}={1}
+m=len(matrix{0})
+n=len(matrix{0}[0])
 head_matrix(m,n,num_matrix)
 count=0
 for i in range(0,int(m),1):
@@ -59,9 +62,10 @@ def input_matrix(m,n,num):
         if (count==m+1):
             break
     return temp_matrix
-def trapezoid(e,m,n):
+def trapezoid(e):
     exec(f"""global matrix
 matrix={e}""")
+    m,n=len(matrix),len(matrix[0])
     print()
     one=-1
     for i in range(0,len(matrix[0]),1):
@@ -90,16 +94,18 @@ matrix={e}""")
                                 print("\n({4}) h{0} -> h{0} - ({1}/{2}) * h{3}".format(str(row+1),str(up),str(down),str(i+1),str(loop_calc)))
                                 for j in range(0,len(matrix[row]),1):
                                     matrix[row][j]=float(matrix[row][j])-float(up/down)*float(matrix[i][j])
-                                print_matrix(int(0),str(matrix),m,n)
+                                print_matrix(int(0),str(matrix))
                                 loop_calc+=1
                 else:
                     one=int(num+1)
                     break
         return matrix
-def calc_matrix(a,b,m0,n0,m1,n1,math):
+def calc_matrix(a,b,math):
     exec(f"""global matrix0,matrix1
 matrix0={a}
 matrix1={b}""")
+    m0,n0=len(matrix0),len(matrix0[0])
+    m1,n1=len(matrix1),len(matrix1[0])
     print()
     print('===========')
     print()
@@ -119,9 +125,10 @@ matrix1={b}""")
     else:
         print("Cannot calculator {0}x{1} and {2}x{3}".format(str(m0),str(n0),str(m1),str(n1)))
         exit()
-def matrix_xx(e,m,n):
+def matrix_xx(e):
     exec(f"""global matrix
 matrix={e}""")
+    m,n=len(matrix),len(matrix[0])
     print()
     while 1:
         try:
@@ -143,7 +150,7 @@ matrix={e}""")
         for column in range(0,len(matrix[row]),1):
             matrix[row][column]=float(matrix[row][column]*int(math))
     return matrix
-def encrypt_matrix(k,e,text_ori,m,n):
+def encrypt_matrix(k,e,text_ori):
     text2num={}
     num2text={}
     count=0
@@ -158,6 +165,8 @@ def encrypt_matrix(k,e,text_ori,m,n):
     global matrix
     exec(f"""global matrix
 matrix={e}""")
+    m=len(matrix)
+    n=len(matrix[0])
     print()
     text=text_ori.replace(" ","-")
     text2list=[]
@@ -195,8 +204,8 @@ matrix={e}""")
                 text+="-"
             count+=1
     if (k==0):
-        matrix=""
-    text2list=calc_matrix(str(matrix),str(text2list),m,n,m,len(text2list[0]),"*")
+        matrix=nghich_dao(str(matrix))
+    text2list=calc_matrix(str(matrix),str(text2list),"*")
     for row in range(0,len(text2list),1):
         for column in range(0,len(text2list[row]),1):
             while (text2list[row][column]>len_char-1):
