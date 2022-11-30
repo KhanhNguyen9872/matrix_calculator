@@ -96,7 +96,7 @@ while 1:
             print("Original text: {}".format(str(text)))
             print("Encrypted text: {}".format(str(text2)))
         elif ask=="7":
-            text=str(input("Input Encrypt text: "))
+            text=str(input("Input Encrypted text: "))
             text2=encrypt_matrix(0,str(matrix0),str(text))
             if (text2==False):
                 continue
