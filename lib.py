@@ -1,9 +1,10 @@
 from os import system,name
 from sys import exit
 from lib2 import *
-def error(m,n,text,required,error):
+def error(m,n,text,errorat,required,error):
     print("Matrix size: {0}x{1}".format(str(m),str(n)))
     print("Text: \"{0}\" ({1} character)".format(str(text),str(len(text))))
+    print("Error at: {}".format(str(errorat)))
     print("Required: {}".format(str(required)))
     print("ERROR: {}".format(str(error)))
 def clear():
@@ -11,6 +12,8 @@ def clear():
         system('cls')
     else:
         system('clear')
+def pause():
+    input("\nPress Enter to Exit!")
 def matrix_initialization(m,n):
     matrix=[]
     for i in range(0,int(m),1):
@@ -104,8 +107,14 @@ def calc_matrix(a,b,math):
     exec(f"""global matrix0,matrix1
 matrix0={a}
 matrix1={b}""")
-    m0,n0=len(matrix0),len(matrix0[0])
-    m1,n1=len(matrix1),len(matrix1[0])
+    try:
+        m0,n0=len(matrix0),len(matrix0[0])
+        m1,n1=len(matrix1),len(matrix1[0])
+    except TypeError:
+        clear()
+        error(0,0,"","MATH Error!","Try another matrix!","The program cannot calculator the matrix because the matrix is faulty!")
+        pause()
+        return False
     print()
     print('===========')
     print()
@@ -168,7 +177,10 @@ matrix={e}""")
     m=len(matrix)
     n=len(matrix[0])
     print()
-    text=text_ori.replace(" ","-")
+    if (k!=0):
+        text=text_ori.replace(" ","-")
+    else:
+        text=text_ori
     text2list=[]
     for i in range(0,len(matrix),1):
         text2list.append([])
@@ -179,10 +191,11 @@ matrix={e}""")
                 text2list[i].append(text2num[text[count].lower()])
             except KeyError:
                 clear()
-                error(m,n,text_ori,"Add \"{}\" to character list!".format(str(text[count].lower())),
+                error(m,n,text_ori,"Character\"{0}\" at {1} in string!".format(str(text[count].lower()),str(count)),"Add \"{}\" to character list!".format(str(text[count].lower())),
                     "The program cannot encrypt this text because the text has a character not found in the character list!")
                 print("Character list: "+str(character))
-                exit()
+                pause()
+                return False
             except IndexError:
                 if (khanhnguyen9872==0):
                     len_t=len(text_ori)
@@ -190,7 +203,7 @@ matrix={e}""")
                         len_t+=1
                     while 1:
                         clear()
-                        error(m,n,text_ori,"{} character".format(str(len_t)),
+                        error(m,n,text_ori,"Only have {} character in string!".format(str(len(text_ori))),"{} character".format(str(len_t)),
                             "The program cannot encrypt this text because the text does not have enough characters with the matrix!")
                         print("\n SYSTEM: The program can fix it by adding space to your text!\n")
                         ask=str(input("Do you want to fix it? [Y/N]: "))
@@ -198,11 +211,11 @@ matrix={e}""")
                             khanhnguyen9872=1
                             break
                         elif (ask.lower()=="n"):
-                            print("Exiting...")
-                            exit()
+                            return False
                 text2list[i].append(0)
                 text+="-"
             count+=1
+    khanhnguyen9872=0
     if (k==0):
         matrix=nghich_dao(str(matrix))
     text2list=calc_matrix(str(matrix),str(text2list),"*")
@@ -212,7 +225,22 @@ matrix={e}""")
                 text2list[row][column]-=len_char
             while (text2list[row][column]<0):
                 text2list[row][column]+=len_char
-            text2list[row][column]=num2text[int(text2list[row][column])]
+            try:
+                text2list[row][column]=num2text[text2list[row][column]]
+            except KeyError:
+                if (khanhnguyen9872==0) and (k==0):
+                    while 1:
+                        clear()
+                        error(m,n,text_ori,"\"{0}\" at {1}x{2} in matrix!".format(str(text2list[row][column]),str(row+1),str(column+1)),"Try encrypt another text or using another key",
+                            "The program could not decrypt this text because when calculating the matrix, the program returned a float!")
+                        print("\n SYSTEM: The program can ignore all these errors and continue running!\n")
+                        ask=str(input("Do you want to continue? [Y/N]: "))
+                        if (ask.lower()=="y"):
+                            khanhnguyen9872=1
+                            break
+                        elif (ask.lower()=="n"):
+                            return False
+                text2list[row][column]=num2text[int(text2list[row][column])]
     text=""
     for column in range(0,len(text2list[0]),1):
         for row in range(0,len(text2list),1):
