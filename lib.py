@@ -219,6 +219,8 @@ matrix={e}""")
     if (k==0):
         matrix=nghich_dao(str(matrix))
     text2list=calc_matrix(str(matrix),str(text2list),"*")
+    if (text2list==False):
+        return False
     for row in range(0,len(text2list),1):
         for column in range(0,len(text2list[row]),1):
             while (text2list[row][column]>len_char-1):
