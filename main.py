@@ -14,6 +14,7 @@ if __name__=='__main__':
     5. Nhân ma trận lên nhiều lần (x1,x2,...)
     6. Mã hóa string bằng ma trận
     7. Giải mã string bằng ma trận
+    8. Ma trận nghịch đảo (A^-1)
     K. Exit
 
     Your choose: """))
@@ -36,6 +37,9 @@ if __name__=='__main__':
                 max=1
                 break
             elif ask=="7":
+                max=1
+                break
+            elif ask=="8":
                 max=1
                 break
             elif ask=="K" or ask=="k":
@@ -105,4 +109,8 @@ while 1:
             print_matrix("key",matrix0)
             print("Encrypted text: {}".format(str(text)))
             print("Decrypted text: {}".format(str(text2)))
+        elif ask=="8":
+            answer=nghich_dao(str(matrix0))
+            clear()
+            print_matrix("nghich dao",answer)
         pause()

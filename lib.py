@@ -80,6 +80,7 @@ mt={e}""")
     def left_matrix(i):
         print(f" {i} | ",end="")
     def print_matrix(num_matrix,execute):
+        num_matrix=str(num_matrix).replace(" ","_")
         exec("""global matrix{0}
 matrix{0}={1}
 m=len(matrix{0})
