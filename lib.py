@@ -4,7 +4,7 @@ if (__name__=='lib'):
         from sys import exit
         import numpy as np
     except:
-        if (os.name=='nt'):
+        if (name=='nt'):
             system('python -m pip install numpy')
         else:
             system('python3 -m pip install numpy')
